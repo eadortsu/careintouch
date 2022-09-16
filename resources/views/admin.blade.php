@@ -229,12 +229,91 @@
                         </td>
                         <td>
                           <span>
-                            <button type="button" class="editbtn" data-toggle="modal" data-target="#editMembers"><i
+                            <button type="button" class="editbtn" data-toggle="modal" data-target="#editMembers-{{ $employee->id }}"><i
                                 class="fe fe-edit-3"></i></button>
                           </span>
                         </td>
                       </tr>
-
+                      <div class="modal fade " id="editMembers-{{ $employee->id }}" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered editMembers" role="document">
+                          <div class="modal-content editMembers">
+                            <div class="card-header">
+                
+                              <!-- Title -->
+                              <h2 class="card-header-title">
+                                Edit Employee Detail{{ $employee->id }}
+                              </h2>
+                
+                              <!-- Close -->
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                
+                            </div>
+                            <div class="card-body editMembers">
+                              <form method="post" action="update-employee/{{ $employee->id }}">
+                                @csrf
+                                @method('PUT')
+                                <div class="row g-3">
+                                  <div class="col-12 col-md-6 mb-3">
+                                    <label class="form-label">Employee Name</label>
+                                    <input type="text" name="name_update" class="form-control " placeholder="Employee Name" value="{{ $employee->name }}" required>
+                                  </div>
+                                  <div class="col-12 col-md-6 mb-3">
+                                    <label class="form-label">Position</label>
+                                    <select name="position_update" class="form-select mb-3">
+                                      <option value="Nurse"> Nurse</option>
+                                      <option value="RN">RN </option>
+                                      <option value="SOC">SOC</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="row g-3">
+                                  <div class="col-12 col-md-6 mb-3">
+                                    <label class="form-label">Hire Date</label>
+                                    <input type="date" name="date_update" class="form-control"  value="{{ $employee->date }}" placeholder="__/__/____"
+                                      data-inputmask="'mask': 'MM/DD/YYYY'">
+                
+                                  </div>
+                                  <div class="col-12 col-md-6 mb-3">
+                                    <label  class="form-label">Hourly Rate</label>
+                                    <input name="hourlyrate_update" type="text" class="form-control " value="{{ $employee->hourlyrate }}"placeholder="$90.00" required>
+                
+                                  </div>
+                                </div>
+                
+                                <div class="row g-3">
+                                  <div class="col-12 col-md-6 mb-3">
+                                    <label class="form-label">Rate</label>
+                                    <select name="rate_update" class="form-select mb-3"  >
+                                      <option  value="{{ $employee->rate }}" selected>{{ $employee->rate }}</option>
+                                      <option value="SOC">SOC </option>
+                                      <option value="RN">RN</option>
+                                    </select>
+                                  </div>
+                                  <div class="col-12 col-md-6 mb-3">
+                                    <label class="form-label">Status</label>
+                                    <select name="status_update" class="form-select mb-3" >
+                                      <option value="{{ $employee->status }}">{{ $employee->status }}</option>
+                                      <option value="Active">Active</option>
+                                      <option value="InActive">InActive</option>
+                                    </select>
+                                  </div>
+                                </div>
+                
+                                <div class="col-auto">
+                                  <!-- Button -->
+                                  <button type="submit" class="btn btn-primary ml-2 addemployeModalBtn employeeBtn">
+                                    Save
+                                  </button>
+                                </div>
+                
+                
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                       @endforeach
   
                       @else
@@ -407,6 +486,15 @@
                     @enderror
                   </div>
                 </div>
+                <div class="col-12 col-md-6 mb-3">
+                  <label class="form-label">Email</label>
+                  <input type="email" name="email" class="form-control @error('email') border border-danger @enderror" placeholder="stephen@gmail.app" required>
+                  @error('email') 
+                  <div class="text-danger">
+                      {{ $message }}
+                    </div>
+                  @enderror
+                </div>
 
                 <div class="col-auto">
                   <!-- Button -->
@@ -422,84 +510,7 @@
         </div>
       </div>
 
-      <div class="modal fade " id="editMembers" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered editMembers" role="document">
-          <div class="modal-content editMembers">
-            <div class="card-header">
-
-              <!-- Title -->
-              <h2 class="card-header-title">
-                Edit Employee Detail
-              </h2>
-
-              <!-- Close -->
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-
-            </div>
-            <div class="card-body editMembers">
-              <form>
-                <div class="row g-3">
-                  <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label">Employee Name</label>
-                    <input type="text" class="form-control " placeholder="Employee Name" required>
-                  </div>
-                  <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label">Position</label>
-                    <select class="form-select mb-3" data-choices>
-                      <option>Select Position</option>
-                      <option>Position 1 </option>
-                      <option>Position 2</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="row g-3">
-                  <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label">Hire Date</label>
-                    <input type="text" class="form-control" placeholder="__/__/____"
-                      data-inputmask="'mask': 'MM/DD/YYYY'">
-
-                  </div>
-                  <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label">Hourly Rate</label>
-                    <input type="text" class="form-control " placeholder="$90.00" required>
-
-                  </div>
-                </div>
-
-                <div class="row g-3">
-                  <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label">Rate</label>
-                    <select class="form-select mb-3" data-choices>
-                      <option>Select Rate</option>
-                      <option>Rate 1 </option>
-                      <option>Rate 2</option>
-                    </select>
-                  </div>
-                  <div class="col-12 col-md-6 mb-3">
-                    <label class="form-label">Status</label>
-                    <select class="form-select mb-3" data-choices>
-                      <option>Select Status</option>
-                      <option>Status 1 </option>
-                      <option>Status 2</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="col-auto">
-                  <!-- Button -->
-                  <button type="button" class="btn btn-primary ml-2 addemployeModalBtn employeeBtn">
-                    Save
-                  </button>
-                </div>
-
-
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
+ 
     </div>
 
   </div> <!-- / .main-content -->

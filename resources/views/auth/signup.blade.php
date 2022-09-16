@@ -44,10 +44,14 @@
       <div class="col-12 col-md-6 col-lg-6 col-xl-6">
 
         <div class="loginFormBody">
+ 
           <!-- Form -->
           <form class="loginForm" action="{{ route('signup') }}" method="post">
             <br><br>
             @csrf
+            
+           
+
             <div class="logo">
               <img src="./assets/images/logo.png" alt="logo"  >
             </div>
@@ -86,6 +90,12 @@
                   {{ $message }}
                 </div>
               @enderror
+              @if (session('status'))
+              <div class="text-danger">
+                  {{ session('status') }}
+                </div>
+               <br>
+               @endif
             </div>
 
             <!-- Password -->
@@ -167,7 +177,7 @@
               <!-- Help text -->
               
               <!-- Help text -->
-              <a href="#" class="form-text small float-right text-decoration-underline link-primary">
+              <a href="{{ route('login') }}" class="form-text small float-right text-decoration-underline link-primary">
                 Sign In
               </a>
             </div>

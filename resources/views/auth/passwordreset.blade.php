@@ -46,25 +46,17 @@
 
         <div class="loginFormBody">
           <!-- Form -->
-          <form class="loginForm" action="{{ route('login') }}" method="post">
-            @csrf
+          <form class="loginForm">
+
             <div class="logo">
               <img src="./assets/images/logo.png" alt="logo"  >
             </div>
             <!-- Heading -->
             <h1 class="signIn text-center mb-3">
-              Sign In
+              Password reset
             </h1>
             <!-- Email address -->
-
-
             <div class="form-group">
-
-           @if (session('status'))
-           <center class="text-light border border-danger bg-danger"> 
-            {{ session ('status') }}
-            </center>
-            <br>@endif
 
               <!-- Label -->
               <label class="form-label">
@@ -72,66 +64,28 @@
               </label>
 
               <!-- Input -->
-              <input type="email" name="email" class="form-control @error('email') border border-danger @enderror" placeholder="name@address.com" value="{{ old('email') }}">
-              @error('email') 
-              <div class="text-danger">
-                  {{ $message }}
-                </div>
-              @enderror
-            </div>
+              <input type="email" class="form-control" placeholder="name@address.com">
 
-            <!-- Password -->
-            <div class="form-group">
-              <div class="row">
-                <div class="col">
-
-                  <!-- Label -->
-                  <label class="form-label">
-                    Password
-                  </label>
-
-                </div>
-                <div class="col-auto">
-
-                </div>
-              </div> <!-- / .row -->
-
-              <!-- Input group -->
-              <div class="input-group input-group-merge">
-
-                <!-- Input -->
-                <input class="form-control @error('password') border border-danger @enderror" name="password" type="password" placeholder="Enter your password">
-
-                <!-- Icon -->
-                <span class="input-group-text @error('password') border border-danger @enderror">
-                  <i class="fe fe-eye"></i>
-                </span>
-
-              </div>
-              @error('password') 
-              <div class="text-danger">
-                  {{ $message }}
-                </div>
-              @enderror
             </div>
 
             <!-- Submit -->
+            
             <button class="btn btn-lg btn-block btn-primary mb-3">
-              Sign In
+              Reset Password
             </button>
+
 
             <div class="d-flex justify-content-between">
               <!-- Help text -->
-              <div class="checkbox">
-                <label><input type="checkbox" name="remember"> Remember me</label>
-              </div>
+              
               <!-- Help text -->
-              <a href="password-reset.html" class="form-text text-bold text-decoration-underline link-primary">
-              <a href="{{ route('resetpassword') }}">  <strong>Forgot password</strong> </a>
+              <a href="{{ route('login') }}" class="form-text small text-decoration-underline link-primary float-right">
+                Remember your password?
               </a>
             </div>
 
           </form>
+
         </div>
 
       </div>

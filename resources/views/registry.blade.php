@@ -46,7 +46,7 @@
                             </a>
                             <div class="mr-5">
                                 <img src="./assets/images/avator.png" alt="" srcset="">
-                                <span class="username">{{ auth()->user()->name }}</span>
+                                <span class="username"></span>
                                 
                             </div>
                           </div>
@@ -181,6 +181,11 @@
                       </tr>
                     </thead>
                     <tbody class="list font-size-base">
+                        @if($registry->count())
+                     
+                    
+                        @foreach($registry as $employee)
+                       
                       <tr>
 
                         <td>
@@ -253,6 +258,12 @@
                       </tr>
 
                     </tbody>
+                    @endforeach
+  
+                    @else
+
+                    <p> You have no employees</p>
+                    @endif
                   </table>
                 </div>
                 <div class="card-footer d-flex justify-content-between">
@@ -345,10 +356,10 @@
               <form>
                 <div class="row mb-4">
                     <div class="col">
-                        <span class="registryName">Registry Name: {{ auth()->user()->name }} </span>
+                        <span class="registryName">Registry Name:  </span>
                     </div>
                                         <div class="col">
-                        <span class="registryName">Registry Name: {{ auth()->user()->name }} </span>
+                        <span class="registryName">Registry Name:  </span>
                     </div>
                       <div class="col-auto">
                         <span class="registryDate">31/08/2022</span>

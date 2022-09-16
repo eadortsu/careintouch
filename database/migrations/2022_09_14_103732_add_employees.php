@@ -20,11 +20,13 @@ return new class extends Migration
             $table-> string('position');
             $table-> date('date');
             $table-> decimal('hourlyrate');
-            $table-> decimal('rate');
+            $table-> string('rate');
             $table-> string('status');
+            $table-> string('email');
             $table ->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.
@@ -33,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('add_employees');
+        //
     }
 };

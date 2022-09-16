@@ -45,7 +45,7 @@
                                 </a>
                                 <div class="mr-5">
                                     <img src="./assets/images/avator.png" alt="" srcset="">
-                                    <span class="username">John Doe</span>
+                                    <span class="username">{{ auth()->user()->name }}</span>
                                 </div>
                               </div>
                             </div>
@@ -107,7 +107,7 @@
                             <div class="card">
                                 <div class="pl-3">
                                     <div class="tableHeadr">
-
+                                     
                                         <div class="row align-items-center">
                                             <div class="col">
                                                 <!-- Title -->
@@ -117,7 +117,7 @@
                                                             Employee Name
                                                           </h4>
                                                         <h1 class="header-title text-truncate ml-3">
-                                                            John Doe
+                                                          {{ auth()->user()->name }}
                                                         </h1>
                                                     </div>
                                                     <div class="mr-6">
@@ -126,6 +126,16 @@
                                                           </h4>
                                                         <h1 class="header-title text-truncate ml-3">
                                                             Nurse
+                                                            @if($employees->count())
+                     
+                    
+                                                            @foreach($employees as $employee)
+                                                           
+                      
+                                                            {{ $employee->position }}
+                                                            @endforeach
+                                                            @endif
+
                                                         </h1>
                                                     </div>
                                                     <div class="mr-6">
@@ -679,7 +689,8 @@
         
                     </div>
                     <div class="card-body modalMembers">
-                      <form>
+                      <form action="{{ route('employee') }}" method="post">
+                        @csrf
                         <div class="row mb-4">
                             <div class="col">
                                 <span class="registryName">Registry Name: John Doe </span>

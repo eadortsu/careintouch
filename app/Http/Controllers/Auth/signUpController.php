@@ -27,21 +27,34 @@ class signUpController extends Controller
         'email'=>'required|email|max:100',
         'password'=>'required|confirmed|min:6'
    ]);
-
+//laravel function to check if email exists in users table
+    if(User::where('email',$request->email)->exists())
+    {
+        return back()->with('status','Email already exists');
+    }
        //save details
        User::create([
         'name'=>$request->name,
         'email'=>$request->email,
         'password'=>Hash::make($request->password),
+        'role'=>'employee',
 
        ]);
     
 
        //sign in user
 
-       auth()->attempt ($request->only('email','password'));
+       auth()->attempt ($request->only('email','password','role'));
 
        //redirect
-       return redirect()->route('dashboard');
+       if(auth()->user()->role=='admin')
+       {
+        return redirect()->route('dashboard');
+       }
+       else
+       {
+        return redirect()->route('employee');
+       }
+      
     }
 }
