@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('patients', function (Blueprint $table) {
             $table->id();
             $table-> foreignID('employee_id')->references('id')->on('add_employees')->onDelete('cascade')->onUpdate('cascade');
-            //$table-> unsignedBigInteger('employee_id')->references('id')->on('add_employees')->onDelete('cascade')->onUpdate('cascade');
             $table-> foreignID('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table-> string('patient_name');
             $table-> decimal('numberofvisits')->nullable();

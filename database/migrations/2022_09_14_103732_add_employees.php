@@ -17,11 +17,11 @@ return new class extends Migration
             $table->id();
             $table-> foreignID('user_id')->constrained()->onDelete('cascade');
             $table-> string('name');
-            $table-> string('position');
-            $table-> date('date');
-            $table-> decimal('hourlyrate');
-            $table-> string('rate');
-            $table-> string('status');
+            $table-> string('position')->nullable();
+            $table-> date('date')->nullable();
+            $table-> decimal('hourlyrate')->nullable();
+            $table-> string('rate')->nullable();
+            $table-> string('status')->nullable();
             $table-> string('email');
             $table ->timestamps();
         });

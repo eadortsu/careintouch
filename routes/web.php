@@ -26,7 +26,7 @@ Route::middleware('isAdmin')->group(function(){
     Route::put('/update-employee/{id}', [DashboardController::class,'UpdateEmployee'])->middleware('auth')->name('updateemployee');
     Route::get('/registry', [RegistryController::class, 'getRegistry'])->name('registry');
     Route::post('/registry', [RegistryController::class, 'saveRegistry'])->name('saveRegistry');
-    Route::get('/logout', [LogoutController::class, 'index'])->name('logout');
+    Route::post('/paysummary', [RegistryController::class, 'paysummary'])->name('paysummary')->middleware('auth');
 });
 
 
@@ -51,6 +51,5 @@ Route::get('/resetpassword', function () {
 Route::get('/registry', [RegistryController::class,'getRegistry'])->name('registry');
 
 
-Route::get('/', function () {
-    return view('auth.index');
-})->name('index');
+Route::get('/', [LoginController::class,'index'])->name('login');
+Route::post('/', [LoginController::class,'save'])->name('login');

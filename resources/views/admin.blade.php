@@ -81,7 +81,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{{ route('registry') }}">
               <i class="fe fe-file-plus"></i> Registry list
             </a>
           </li>
@@ -128,7 +128,7 @@
                       <div class="col">
 
                         
-           @if (session('status'))
+           @if (session('status2'))
            <center class="text-light border border-danger bg-danger"> 
             {{ session ('status2') }}
             </center>

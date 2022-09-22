@@ -13,21 +13,22 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('paysummary', function (Blueprint $table) {
+        Schema::create('paysummaries', function (Blueprint $table) {
         $table->id();
         $table->date('date');
-        $table->foreignID('user_id')->references('id')->on('users')->constrained()->onDelete('cascade')->onUpdate('cascade');
-        //$table->integer('employee_id')->unsigned()->index();
+        $table->foreignID('user_id')->constrained()->unsigned()->references('id')->on('users')->constrained()->onDelete('cascade')->onUpdate('cascade');
+        $table->string('patient_name');
         //$table->foreign('employee_id')->constrained();
-        $table->unsignedBigInteger('employee_id_unique')->references('id')->on('add_employees')->onDelete('cascade')->onUpdate('cascade');
+        $table->foreignID('employee_id_unique')->references('id')->on('add_employees')->nullable();
         $table->string('rate')->nullable();
+        $table->string('ratetype')->nullable();
         $table-> decimal('numberofvisits')->nullable();
         $table-> decimal('numberofmiles')->nullable();
-        $table->string('status');
-        $table->string('typeofemployment');
-        $table->string('invoicenumber');
+        $table->string('milesusd')->nullable();
+        $table->string('invoicenumber')->nullable();
         $table-> decimal('totalrate')->nullable();
         $table-> string('comments')->nullable();
+        $table-> string('status');
         $table-> string('typeofvisit')->nullable();
         $table ->timestamps();
         });

@@ -12,6 +12,7 @@ class paysummary extends Model
     protected $fillable=[
         'date',
         'user_id',
+        'patient_name',
         'employee_id_unique',
         'rate',
         'numberofvisits',
@@ -21,6 +22,7 @@ class paysummary extends Model
         'invoicenumber',
         'totalrate',        
         'comments',
+        'milesusd',
         'typeofvisit',
     ];
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
+use App\Models\addEmployee;
+use App\Models\registry;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -41,10 +43,13 @@ class signUpController extends Controller
 
        ]);
     
+       
 
        //sign in user
 
        auth()->attempt ($request->only('email','password','role'));
+
+ 
 
        //redirect
        if(auth()->user()->role=='admin')
