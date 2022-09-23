@@ -4,15 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\models\addEmployee;
+use App\Models\addEmployee;
 
-use App\models\registry;
+use App\Models\registry;
 
 use App\Models\User;
 
 use Illuminate\Support\Str;
 
 use Illuminate\Support\Facades\Hash;
+
 
 
 class DashboardController extends Controller
