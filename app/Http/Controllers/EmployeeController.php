@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\models\addEmployee;
+use App\Models\addEmployee;
 
-use App\models\registry;
+use App\Models\registry;
 
 use App\Models\User;
 
