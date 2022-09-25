@@ -4,21 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\models\registry;
+use App\Models\registry;
 
 use App\Models\User;
 
-use App\models\addEmployee;
+use App\Models\addEmployee;
 
-use App\models\patients;
+use App\Models\patients;
 
-use App\models\paysummary;
+use App\Models\paysummary;
 
 
 class RegistryController extends Controller
 {
-   
-  
+
+
    //get all registry
     public function getRegistry(Request $request)
     {
@@ -32,7 +32,7 @@ class RegistryController extends Controller
         ]);
     }
 
-    
+
     public function paysummary(Request $request)
     {
         //get input from form
@@ -85,7 +85,7 @@ class RegistryController extends Controller
             'employee_id'=>addEmployee::where('name',auth()->user()->name)->value('id'),
             'patient_name'=>$patientname,
             'nmberofvisits'=>$visits,
-           
+
         ]);
         return back()->with('statusreg','Paysummary added successfully');
     }
