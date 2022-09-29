@@ -26,9 +26,10 @@ Route::middleware('isAdmin')->group(function(){
     Route::put('/update-employee/{id}', [DashboardController::class,'UpdateEmployee'])->middleware('auth')->name('updateemployee');
     Route::get('/registry', [RegistryController::class, 'getRegistry'])->name('registry');
     Route::post('/registry', [RegistryController::class, 'saveRegistry'])->name('saveRegistry');
+    Route::put('/update-paysummary/{id}', [RegistryController::class,'UpdatePaysummary'])->middleware('auth')->name('updatepaysummary');
+    Route::put('/update-registry/{rid}', [RegistryController::class,'UpdateRegistry'])->middleware('auth')->name('updateregistry');
     Route::post('/paysummary', [RegistryController::class, 'paysummary'])->name('paysummary')->middleware('auth');
 });
-
 
 
 Route::post('/logout', [LogoutController::class,'signoff'])->name('logout');
@@ -42,14 +43,23 @@ Route::post('/login', [LoginController::class,'save']);
 
 Route::get('/employee', [EmployeeController::class,'index'])->name('employee')->middleware('auth');
 Route::post('/employee', [EmployeeController::class,'paysummary'])->name('employee')->middleware('auth');
-//Route::get('/employee', function(){return view('employeeAccount');})->name('employee');
 
 Route::get('/resetpassword', function () {
     return view('auth.passwordreset');
 })->name('resetpassword');
 
+Route::get('/pay', function () {
+    return view('pay');
+})->name('pay');
+
+Route::get('/reports', function () {
+    return view('report');
+})->name('report');
+
 Route::get('/registry', [RegistryController::class,'getRegistry'])->name('registry');
 
 
-Route::get('/', [LoginController::class,'index'])->name('login');
-Route::post('/', [LoginController::class,'save'])->name('login');
+
+Route::get('/',[EmployeeController::class,'index'])->name('employee');
+Route::post('/',[EmployeeController::class,'paysummary'])->name('employee');
+//Route::post('/', [LoginController::class,'save'])->name('login');

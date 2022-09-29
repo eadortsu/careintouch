@@ -76,7 +76,7 @@
         <!-- Navigation -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link activeNav" href="admin.html">
+            <a class="nav-link activeNav" href="{{ route('dashboard') }}">
               <i class="fe fe-users"></i> Employee list
             </a>
           </li>
@@ -86,12 +86,12 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="pay.html">
+            <a class="nav-link" href="{{ route('pay') }}">
               <i class="fe fe-file"></i> Pay Approval
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="report.html">
+            <a class="nav-link" href="{{ route('report') }}">
               <i class="fe fe-file-text"></i> Reports
             </a>
           </li>
@@ -223,8 +223,11 @@
                           <span>SOC</span>
                         </td>
                         <td>
-                          <span>
+                          <span>@if ($employee->status=='Active') 
                             <button class="btn btn-outline-success">{{ $employee->status }}</button>
+                            @else
+                            <button class="btn btn-outline-danger">{{ $employee->status }}</button>
+                            @endif
                           </span>
                         </td>
                         <td>

@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('registries', function (Blueprint $table) {
-            $table->id();
+            $table->rid();
             $table-> foreignID('user_id')->constrained()->unsigned()->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table-> foreignID('employee_id')->references('id')->on('add_employees')->onDelete('cascade')->onUpdate('cascade');
             $table-> string('typeofemployment')->nullable();

@@ -16,20 +16,27 @@ use App\Models\patients;
 
 class EmployeeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index(Request $request)
 
     { //if employee details already exists in addEmployee table and registries table, then add them
         if(addEmployee::where('email',auth()->user()->email)->exists() && registry::where('user_id',auth()->user()->id)->exists())
         {
-            //redirect to employee details page
+           //get total number of patients from current user
+              $patients=patients::where('user_id',auth()->user()->id)->count();
+
            
         $employees = addEmployee::where('user_id',auth()->user()->id)->get();
         $registry = registry::where('user_id',auth()->user()->id)->get();
         $paysummary= paysummary::where('user_id',auth()->user()->id)->get();
         return view('employeeAccount',[
             'employees'=>$employees,
-            'registry'=>$registry,
-            'paysummary'=>$paysummary,
+            'registries'=>$registry,
+            'paysummaries'=>$paysummary,
+            'patients'=>$patients,
         ]);
            
         }
@@ -94,7 +101,7 @@ class EmployeeController extends Controller
        paysummary::create([
             'user_id'=>auth()->id(),
             'patient_name'=>$patientname,
-            'employee_id_unique'=>addEmployee::where('name',auth()->user()->name)->value('id'),
+            'employee_id_unique'=>addEmployee::where('email',auth()->user()->email)->value('id'),
             'date'=>$date,
             'rate'=>$rate,
             'numberofvisits'=>$visits,

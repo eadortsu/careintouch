@@ -41,7 +41,10 @@
                                 </a>
                                 <a  href="#" >
                                     <img src="./assets/images/ccr.png" class=" mx-auto mr-2" alt="..." height="20" width="30">
-                                    <span class="link-primary logoText mt-2">7:50:27 AM  Sep, 2022</span>
+                                    <span class="link-primary logoText mt-2">{{ 
+                                      //current date
+                                      $date = date('m/d/Y', time());
+                                      }}</span>
                                 </a>
                                 <div class="mr-5">
                                     <img src="./assets/images/avator.png" alt="" srcset="">
@@ -76,7 +79,7 @@
                 <!-- Navigation -->
                 <ul class="navbar-nav">
                     <li class="nav-item ">
-                        <a class="nav-link activeNav" href="employeeAccount.html">
+                        <a class="nav-link activeNav" href="{{ route('employee') }}">
                             <i class="fe fe-user"></i> Account
                         </a>
                     </li>
@@ -120,18 +123,19 @@
                                                           {{ auth()->user()->name }}
                                                         </h1>
                                                     </div>
+                                                    @if($employees->count())
+                     
+                    
+                                                    @foreach($employees as $employee)
+                                                    @foreach($registries as $registry)
+                                                   
                                                     <div class="mr-6">
                                                         <h4 class="header-pretitle ml-3">
                                                             Position
                                                           </h4>
                                                         <h1 class="header-title text-truncate ml-3">
-                                                          {{ auth()->user()->position }}
-                                                            @if($employees->count())
-                     
-                    
-                                                            @foreach($employees as $employee)
-                                                            @foreach($registry as $registry)
-                                                           
+                                                        
+                                                         
                       
                                                             {{ $employee->position }}
                                                          
@@ -222,6 +226,7 @@
                                         <div class="p-4">
                                             <select class="form-select mb-3" data-choices>
                                                 <option>2022</option>
+                                                <option>2023</option>
                                             </select>
                                         </div>
                                     </div>
@@ -267,47 +272,52 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody class="list font-size-base">
+                                                  @if($paysummaries->count())
+                     
+                    
+                                                    @foreach($paysummaries as $paysummary)
+                                                       @if($paysummary->status == 'submitted')
                                                     <tr>
                                                         <td>
                                                             <!-- Text -->
-                                                            <span>1</span>
+                                                            <span>{{ $paysummary->id }}</span>
 
                                                         </td>
                                                         <td>
-                                                            <span>08/15-08/20</span>
+                                                            <span>{{ $paysummary->date }}</span>
                                                         </td>
                                                         <td>
-                                                            <span> #478851</span>
+                                                            <span>{{ $paysummary->invoicenumber }}</span>
                                                         </td>
                                                         
                                                         <td>
-                                                            <span>15</span>
+                                                            <span>{{ $patients }}</span>
                                                         </td>
                                                         <td>
-                                                            <span>15</span>
+                                                            <span>{{ $paysummary->numberofvisits }}</span>
                                                         </td>
                                                         <td>
                                                             <span>Monthly</span>
                                                         </td>
                                                         <td>
-                                                            <span>90 USD</span>
+                                                            <span>{{ $paysummary->totalrate }}USD</span>
                                                         </td>
                                                         <td>
-                                                            <span>90 USD</span>
+                                                            <span>{{ $paysummary->milesusd }}USD</span>
                                                         </td>
                                                         <td>
-                                                            <span>Supply</span>
+                                                            <span>{{ $paysummary->comments }}</span>
                                                         </td>
                                                         <td>
                                                             <span>
                                                                 <button
-                                                                    class="btn btn-outline-success">Approved</button>
+                                                                    class="btn btn-outline-success">{{ $paysummary->status }}</button>
                                                             </span>
                                                         </td>
                                                         <td>
                                                             <span>
                                                                 <button type="button" class="editbtn"
-                                                                    data-toggle="modal" data-target="#editMembers"><i
+                                                                    data-toggle="modal" data-target="#editMembers-{{ $paysummary->id }}"><i
                                                                         class="fe fe-edit-3"></i></button>
                                                             </span>
                                                         </td>
@@ -352,14 +362,22 @@
                                                         <td>
                                                             <span>
                                                                 <button type="button" class="editbtn"
-                                                                    data-toggle="modal" data-target="#editMembers"><i
+                                                                    data-toggle="modal" data-target="#editMembers-{{ $paysummary->id }}"><i
                                                                         class="fe fe-edit-3"></i></button>
                                                             </span>
                                                         </td>
                                                     </tr>
+                                                    @endif
+                                                    @endforeach
+                                                   
                                                 </tbody>
-
+                                               
                                             </table>
+                                            @else
+                                                
+                                            <h6 class="text-center">No Records Found</h6>
+                                    
+                                    @endif
                                         </div>
 
                                         <div class="card-footer ">
@@ -540,47 +558,52 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody class="list font-size-base">
+                                                  @if($paysummaries->count())
+                     
+                    
+                                                  @foreach($paysummaries as $paysummary)
+                                                     @if($paysummary->status == 'approved')
                                                     <tr>
                                                         <td>
                                                             <!-- Text -->
-                                                            <span>1</span>
+                                                            <span>{{ $paysummary->id }}</span>
 
                                                         </td>
                                                         <td>
                                                             <span>08/15-08/20</span>
                                                         </td>
                                                         <td>
-                                                            <span> #478851</span>
+                                                            <span> {{ $paysummary->invoicenumber }}</span>
                                                         </td>
                                                         
                                                         <td>
-                                                            <span>15</span>
+                                                            <span>{{ $patients }} </span>
                                                         </td>
                                                         <td>
-                                                            <span>15</span>
+                                                            <span>{{ $paysummary->numberofvisits }}</span>
                                                         </td>
                                                         <td>
                                                             <span>Monthly</span>
                                                         </td>
                                                         <td>
-                                                            <span>90 USD</span>
+                                                            <span>{{ $paysummary->totalrate }}</span>
                                                         </td>
                                                         <td>
-                                                            <span>90 USD</span>
+                                                            <span>{{ $paysummary->milesusd }}</span>
                                                         </td>
                                                         <td>
-                                                            <span>Supply</span>
+                                                            <span>{{ $paysummary->comments }}</span>
                                                         </td>
                                                         <td>
                                                             <span>
                                                                 <button
-                                                                    class="btn btn-outline-success">Approved</button>
+                                                                    class="btn btn-outline-success">{{ $paysummary->status }}</button>
                                                             </span>
                                                         </td>
                                                         <td>
                                                             <span>
                                                                 <button type="button" class="editbtn"
-                                                                    data-toggle="modal" data-target="#editMembers"><i
+                                                                    data-toggle="modal" data-target="#editMembers-{{ $paysummary->id }}"><i
                                                                         class="fe fe-edit-3"></i></button>
                                                             </span>
                                                         </td>
@@ -625,13 +648,15 @@
                                                         <td>
                                                             <span>
                                                                 <button type="button" class="editbtn"
-                                                                    data-toggle="modal" data-target="#editMembers"><i
+                                                                    data-toggle="modal" data-target="#editMembers-{{ $paysummary->id }}"><i
                                                                         class="fe fe-edit-3"></i></button>
                                                             </span>
                                                         </td>
                                                     </tr>
                                                 </tbody>
-
+                                                @endif
+                                                @endforeach
+                                                @endif
                                             </table>
                                         </div>
 

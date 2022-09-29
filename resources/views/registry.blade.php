@@ -185,21 +185,19 @@
                         <th></th>
                       </tr>
                     </thead>
-                    <tbody class="list font-size-base">
-                        @if($registries->count()>0)
+                  
+                        @if($registries)
                      
-                    
+                        <tbody class="list font-size-base">
                         @foreach($employees as $employee)
-                        @foreach ( $registries as $registry )
-                          
-                       
-                       
+                     
+                
                       <tr>
 
                         <td>
 
                           <!-- Text -->
-                          <span>1</span>
+                          <span>{{ $employee->id }}</span>
 
                         </td>
                         <td>
@@ -209,10 +207,10 @@
 
                         </td>
                         <td>
-                          <span> {{ $registry->typeofemployment }}</span>
+                          <span> {{ $employee->typeofemployment }}</span>
                         </td>
                         <td>
-                          <span>{{ $registry->registrytype }}</span>
+                          <span>{{ $employee->registrytype }}</span>
                         </td>
                         <td>
                           <span>{{ $employee->position }}</span>
@@ -223,52 +221,22 @@
                           </span>
                         </td>
                         <td>
-                          <span>
-                            <button type="button" class="editbtn" data-toggle="modal" data-target="#editMembers-{{ $registry->id }}"><i
+                          <span> 
+                                
+                             
+                            <button type="button" class="editbtn" data-toggle="modal" data-target="#ReditMembers-{{ $employee->rid }}"><i
                                 class="fe fe-edit-3"></i></button>
+                                
+                                
                           </span>
                         </td>
                       </tr>
-                      <tr>
-
-                        <td>
-
-                          <!-- Text -->
-                          <span>1</span>
-
-                        </td>
-                        <td>
-
-                          <!-- Text -->
-                          <span>James Maxwell</span>
-
-                        </td>
-                        <td>
-                          <span> Full Time</span>
-                        </td>
-                        <td>
-                          <span>Registry</span>
-                        </td>
-                        <td>
-                          <span>RN</span>
-                        </td>
-                        <td>
-                          <span>
-                            <button class="btn btn-outline-danger">Non-Active</button>
-                          </span>
-                        </td>
-                        <td>
-                          <span>
-                            <button type="button" class="editbtn" data-toggle="modal" data-target="#editMembers"><i
-                                class="fe fe-edit-3"></i></button>
-                          </span>
-                        </td>
-                      </tr>
-
-                    </tbody>
-                      @endforeach
+                     
+                          
+                   
+                   
                     @endforeach
-  
+                  </tbody>
                     @else
 
                     <p> You have no employees</p>
@@ -612,11 +580,12 @@
                         </tr>
                       </thead>
                       <tbody class="list font-size-base">
-                        @if($paysummaries->count())
+                        @if($employees)
                      
                     
-                        @foreach($employees as $employee)
-                        @foreach ( $paysummaries as $paysummary )
+                       
+                         @foreach ( $employees as $employee )
+
                           
                        
                        
@@ -630,38 +599,40 @@
                             <span>{{ $employee->name }}</span>
                           </td>
                           <td>
-                            <span>{{ $paysummary->patient_name }}</span>
+                            <span>{{ $employee->patient_name }}</span>
                           </td>
                           <td>
-                            <span>{{ $paysummary->date }}</span>
+                            <span>{{ $employee->date }}</span>
                           </td>
                           <td>
-                            <span>{{ $paysummary->typeofvisit }}</span>
+                            <span>{{ $employee->typeofvisit }}</span>
                           </td>
                           <td>
                             <span>
-                                $120
+                                ${{ $employee->totalrate }}
                             </span>
                           </td>
                           <td>
-                            <span>${{ $paysummary->milesusd }}</span>
+                            <span>${{ $employee->milesusd }}</span>
                           </td>
                           <td>
-                            <span>{{ $paysummary->comments }}</span>
+                            <span>{{ $employee->comments }}</span>
                           </td>
                           <td>
                             <span>
-                              <button type="button" class="editbtn mr-3" data-toggle="modal" data-target="#editMembers-{{ $registry->id }}"><i
+                            
+                              <button type="button" class="editbtn mr-3" data-toggle="modal" data-target="#editMembers-{{ $employee->pid }}"><i
                                   class="fe fe-edit-3"></i>
                               </button>
-                              <button type="button" class="editbtn" data-toggle="modal" data-target="#editMembers-{{ $registry->id }}"><i
+                              <button type="button" class="editbtn" data-toggle="modal" data-target="#editMembers-{{ $employee->pid }}"><i
                                 class="fe fe-trash"></i>
                             </button>
+                             
                             </span>
                           </td>
                         </tr>
-                        @endforeach
-                        @endforeach
+                         @endforeach
+                     
                         @endif
                       </tbody>
                     </table>
@@ -670,10 +641,10 @@
                 <div class="row ">
                     <div class="col col-md-7">
                         <hr>
-                        <span class="mr-4">Total Visits:  6 Visits </span>
+                        <span class="mr-4">Total Visits:  {{ $totalvisits }} </span>
                         <span class="mr-6">No. of Hours:  2.5 Visits</span>
                         <span class="mr-4">$170</span>
-                        <span>$52.50</span>
+                        <span>${{ $totalvisits }}</span>
                         <hr>
                     </div>
                     <div class="col-md-2"></div>
@@ -692,14 +663,19 @@
       </div>
       
 
-      <div class="modal fade " id="editMembers-{{ $registry->id }}" tabindex="-1" role="dialog" aria-hidden="true">
+      @if($registries)
+                     
+                    
+      @foreach($employees as $employee)
+
+      <div class="modal fade " id="ReditMembers-{{ $employee->rid }}" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered editMembers" role="document">
           <div class="modal-content editMembers">
             <div class="card-header">
 
               <!-- Title -->
               <h2 class="card-header-title">
-                Edit Registry  Detail
+                Edit Registry  Detail{{ $employee->rid }}
               </h2>
 
               <!-- Close -->
@@ -709,17 +685,19 @@
 
             </div>
             <div class="card-body editMembers">
-              <form>
+              <form method="post" action="update-registry/{{ $employee->rid }}">
+                @csrf
+                @method('PUT')
                 <div class="row g-3">
                   <div class="col-12 col-md-6 mb-3">
                     <label class="form-label">Full Name</label>
-                    <input type="text" class="form-control " placeholder="Full Name"  >
+                    <input name="name" type="text" class="form-control " placeholder="Full Name"  >
                   </div>
                   <div class="col-12 col-md-6 mb-3">
                     <label class="form-label">Type Of Employment</label>
-                    <select class="form-select mb-3"  >
+                    <select name="typeofemployment" class="form-select mb-3"  >
                       <option>Select Employment Type</option>
-                      <option>Full Time</option>
+                      <option value="Full time">Full Time</option>
                     </select>
                   </div>
                 </div>
@@ -727,23 +705,24 @@
                 <div class="row g-3">
                   <div class="col-12 col-md-6 mb-3">
                     <label class="form-label">Registry</label>
-                    <select class="form-select mb-3"  >
+                    <select name="registrytype" class="form-select mb-3"  >
                       <option>Select Registry</option>
-                      <option>Registry 1 </option>
+                      <option value="RN">RN </option>
                     </select>
                   </div>
                   <div class="col-12 col-md-6 mb-3">
                     <label class="form-label">Position</label>
-                    <select class="form-select mb-3"  >
-                      <option>Select Position</option>
-                      <option>RN</option>
+                    <select name="status" class="form-select mb-3"  >
+                      <option>Select Status</option>
+                      <option value="Active">Active</option>
+                      <option value="InActive">In-Active</option>
                     </select>
                   </div>
                 </div>
 
                 <div class="col-auto">
                   <!-- Button -->
-                  <button type="button" class="btn btn-primary ml-2 addemployeModalBtn employeeBtn">
+                  <button type="submit" class="btn btn-primary ml-2 addemployeModalBtn employeeBtn">
                     Save
                   </button>
                 </div>
@@ -754,6 +733,9 @@
           </div>
         </div>
       </div>
+      @endforeach
+
+      @endif
     </div>
 
   </div> <!-- / .main-content -->

@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('paysummaries', function (Blueprint $table) {
-        $table->id();
+        $table->pid();
         $table->date('date');
         $table->foreignID('user_id')->constrained()->unsigned()->references('id')->on('users')->constrained()->onDelete('cascade')->onUpdate('cascade');
         $table->string('patient_name');

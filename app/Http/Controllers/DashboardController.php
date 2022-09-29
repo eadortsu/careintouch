@@ -15,9 +15,12 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 
 
-
 class DashboardController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("auth");
+    }
     //get all employees belonging to the logged in user
     public function index(Request $request)
     {

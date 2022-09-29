@@ -4,31 +4,56 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\models\registry;
+use App\Models\registry;
 
 use App\Models\User;
 
-use App\models\addEmployee;
+use App\Models\addEmployee;
 
-use App\models\patients;
+use App\Models\patients;
 
-use App\models\paysummary;
+use App\Models\paysummary;
 
 
 class RegistryController extends Controller
 {
-   
+    //function to logout after 5 minutes
+    function logoutAfterFiveMinutes()
+    {
+           $timeout = 5; // Set timeout minutes
+           $logout_redirect_url = "/"; // Set logout URL
+
+           $timeout = $timeout * 60; // Converts minutes to seconds
+           if (isset($_SESSION['start_time'])) {
+               $elapsed_time = time() - $_SESSION['start_time'];
+               if ($elapsed_time >= $timeout) {
+                   session_destroy();
+                   echo "<script>alert('Your session has expired!')</script>";
+                   echo "<script>window.location.href='$logout_redirect_url'</script>";
+               }
+           }
+           $_SESSION['start_time'] = time();
+
+    }
   
    //get all registry
     public function getRegistry(Request $request)
     {
-        $registries = registry::paginate(100);
-        $paysummary = paysummary::paginate(100);
-        $employees=addEmployee::paginate(100);
+          $employees=addEmployee::join('paysummaries','employee_id_unique','=','add_employees.id')->join('registries','employee_id','=','registries.employee_id')
+          ->select('add_employees.*','registries.typeofemployment','registries.registrytype','add_employees.name','add_employees.status','add_employees.position',
+          'paysummaries.patient_name','paysummaries.rate','paysummaries.date','paysummaries.typeofvisit','paysummaries.totalrate','paysummaries.milesusd',
+          'paysummaries.comments','paysummaries.totalrate','paysummaries.pid','registries.rid')->get();
+        
+          $registries = registry::get();
+        $totalvisits=paysummary::sum('numberofvisits');
+     
+        
+      
         return view('registry',[
             'registries'=>$registries,
             'employees'=>$employees,
-            'paysummaries'=>$paysummary,
+            'totalvisits'=>$totalvisits,
+            
         ]);
     }
 
@@ -70,7 +95,7 @@ class RegistryController extends Controller
             'employee_id_unique'=>addEmployee::where('name',auth()->user()->name)->value('id'),
             'date'=>$date,
             'rate'=>$rate,
-            'visits'=>$visits,
+            'numberofvisits'=>$visits,
             'numberofmiles'=>$numberofmiles,
             'totalrate'=>$totalrate,
             'ratetype'=>$ratetype,
@@ -89,4 +114,33 @@ class RegistryController extends Controller
         ]);
         return back()->with('statusreg','Paysummary added successfully');
     }
+    public function UpdateRegistry(Request $request, $rid)
+    {
+       //update details
+    
+        //  addEmployee::where('id',$employee->id)->update([
+        //   'name'=>request()->name_update,
+        //   'position'=>request()->position_update,
+        //   'date'=>request()->date_update,
+        //   'hourlyrate'=>request()->hourlyrate_update,
+        //   'position'=>request()->position_update,
+        //   'rate'=>request()->rate_update,
+        //   'status'=>request()->$employee->status_update,
+    
+        //  ]);
+        //update employee details
+        registry::where('rid',$rid)->update([
+          'typeofemployment'=>request()->typeofemployment,
+          'registrytype'=>request()->registrytype,
+              'status'=>request()->status,]);
+       
+            //   $registry = registry::find($rid);
+            //   $registry->typeofemployment = $request->typeofemployment;
+            //   $registry->registrytype = $request->registrytype;
+            //   $registry->status=$request->status;
+            //   $registry->save();
+             
+         return redirect()->back()->with('statusreg','Registry Updated Successfully');
+       }
+    
 }
